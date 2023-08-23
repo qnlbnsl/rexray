@@ -16,7 +16,7 @@ ADD rexray /usr/bin/rexray
 ADD rexray.yml /etc/rexray/rexray.yml
 
 ADD rexray.sh /rexray.sh
-RUN chmod +x /rexray.sh
+RUN chmod +x /rexray.sh && chmod +x /usr/bin/rexray
 
 CMD [ "rexray", "start", "--nopid" ]
 ENTRYPOINT [ "/rexray.sh" ]
