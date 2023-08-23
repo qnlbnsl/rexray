@@ -53,6 +53,7 @@ GOARCH := "arm64"
 # otherwise check to see if go is available. if neither are
 # available then print an error
 $(PROG):
+ifeq (,$(wildcard $(PROG)))
 ifeq (1,$(DOCKER))
 	docker run -it \
 	  -v "$(PWD)":"/go/src/$(GO_IMPORT_PATH)" golang:$(GO_VERSION) \
@@ -62,6 +63,8 @@ else
 	XGOOS=$(GOOS) XGOARCH=$(GOARCH) GOOS= GOARCH= go generate
 	#GOOS=$(GOOS) GOARCH=$(GOARCH) go $(GOBUILD) -o "$(PROG)"
 endif
+endif
+
 
 clean-build:
 	rm -f rexray rexray-client rexray-agent rexray-controller
