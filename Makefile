@@ -2,7 +2,7 @@ export SHELL := $(shell env which bash)
 
 # if PROG is not defined then set it to qnlbnsl
 ifeq (,$(strip $(PROG)))
-PROG := qnlbnsl
+PROG := rexray
 endif
 
 # this makefile's default target is PROG
@@ -247,9 +247,9 @@ DOCKER_SEMVER := $(subst +,-,$(SEMVER))
 DOCKER_DRIVER := $(DRIVER)
 
 ifeq (undefined,$(origin DOCKER_PLUGIN_ROOT))
-DOCKER_PLUGIN_ROOT := $(PROG)
+DOCKER_PLUGIN_ROOT := qnlbnsl
 endif
-DOCKER_PLUGIN_NAME := qnlbnsl/$(DOCKER_DRIVER):$(DOCKER_SEMVER)
+DOCKER_PLUGIN_NAME := $(DOCKER_PLUGIN_ROOT)/$(DOCKER_DRIVER):$(DOCKER_SEMVER)
 DOCKER_PLUGIN_NAME_UNSTABLE := $(DOCKER_PLUGIN_ROOT)/$(DOCKER_DRIVER):edge
 DOCKER_PLUGIN_NAME_STAGED := $(DOCKER_PLUGIN_NAME)
 DOCKER_PLUGIN_NAME_STABLE := $(DOCKER_PLUGIN_ROOT)/$(DOCKER_DRIVER):latest
