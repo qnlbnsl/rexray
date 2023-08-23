@@ -1,8 +1,8 @@
 export SHELL := $(shell env which bash)
 
-# if PROG is not defined then set it to rexray
+# if PROG is not defined then set it to qnlbnsl
 ifeq (,$(strip $(PROG)))
-PROG := rexray
+PROG := qnlbnsl
 endif
 
 # this makefile's default target is PROG
