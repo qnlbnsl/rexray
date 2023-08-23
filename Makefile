@@ -311,7 +311,7 @@ $(DOCKER_PLUGIN_ENTRYPOINT_ROOTFS_TGT): $(DOCKER_PLUGIN_CONFIGJSON_TGT) \
 	  sudo mkdir -p $(@D) && \
 	  sudo docker export "$$id" | sudo tar -x -C $(@D) && \
 	  docker rm -vf "$$id" && \
-	  docker rmi rootfsimage
+	  docker rmi rootfsimage --force
 	sudo docker plugin create $(DOCKER_PLUGIN_NAME) $(<D)
 	docker plugin ls
 
