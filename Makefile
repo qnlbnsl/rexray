@@ -47,6 +47,8 @@ ifneq (,$(strip $(BUILD_TAGS)))
 GOBUILD += -tags '$(BUILD_TAGS)'
 endif
 
+GOOS := "linux"
+GOARCH := "arm64"
 # if docker is avaialble then default to using it to build REX-Ray,
 # otherwise check to see if go is available. if neither are
 # available then print an error
@@ -55,11 +57,10 @@ ifeq (1,$(DOCKER))
 	docker run -it \
 	  -v "$(PWD)":"/go/src/$(GO_IMPORT_PATH)" golang:$(GO_VERSION) \
 	  bash -c "cd \"src/$(GO_IMPORT_PATH)\" && \
-	  XGOOS=$(GOOS) XGOARCH=$(GOARCH) GOOS= GOARCH= go generate && \
 	  GOOS=$(GOOS) GOARCH=$(GOARCH) go $(GOBUILD) -o \"$(PROG)\""
 else
 	XGOOS=$(GOOS) XGOARCH=$(GOARCH) GOOS= GOARCH= go generate
-	GOOS=$(GOOS) GOARCH=$(GOARCH) go $(GOBUILD) -o "$(PROG)"
+	#GOOS=$(GOOS) GOARCH=$(GOARCH) go $(GOBUILD) -o "$(PROG)"
 endif
 
 clean-build:
@@ -248,7 +249,7 @@ DOCKER_DRIVER := $(DRIVER)
 ifeq (undefined,$(origin DOCKER_PLUGIN_ROOT))
 DOCKER_PLUGIN_ROOT := $(PROG)
 endif
-DOCKER_PLUGIN_NAME := $(DOCKER_PLUGIN_ROOT)/$(DOCKER_DRIVER):$(DOCKER_SEMVER)
+DOCKER_PLUGIN_NAME := qnlbnsl/$(DOCKER_DRIVER):$(DOCKER_SEMVER)
 DOCKER_PLUGIN_NAME_UNSTABLE := $(DOCKER_PLUGIN_ROOT)/$(DOCKER_DRIVER):edge
 DOCKER_PLUGIN_NAME_STAGED := $(DOCKER_PLUGIN_NAME)
 DOCKER_PLUGIN_NAME_STABLE := $(DOCKER_PLUGIN_ROOT)/$(DOCKER_DRIVER):latest
