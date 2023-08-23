@@ -381,7 +381,7 @@ GIST_FILES := $(BINTRAY_FILES) semver.env
 ifneq (,$(strip $(DRIVER)))
 GIST_DRIVER := .docker/plugins/$(DRIVER)
 ifneq (,$(wildcard $(GIST_DRIVER)))
-GIST_FILES += $(shell find "$(GIST_DRIVER)" -d 1 -type f \
+GIST_FILES += $(shell find "$(GIST_DRIVER)" -depth 1 -type f \
 	-not -name "rexray" \
 	-not -name ".gitignore" \
 	-not -name "README.md")
@@ -494,7 +494,7 @@ GIST_FILES += $(GIST_README)
 
 create-gist: $(GIST_FILES)
 	@echo create gist
-	-gist -d "$(TRAVIS_JOB_URL)" $^
+	-gist -depth "$(TRAVIS_JOB_URL)" $^
 .PHONY: create-gist
 
 
