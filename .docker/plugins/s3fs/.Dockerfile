@@ -1,10 +1,12 @@
-FROM alpine:3.6
+FROM alpine:3.18
 
 RUN apk update
 RUN apk add xfsprogs e2fsprogs ca-certificates fuse alpine-sdk automake autoconf libxml2-dev fuse-dev curl-dev
 
-RUN git clone https://github.com/s3fs-fuse/s3fs-fuse.git && cd s3fs-fuse && ./autogen.sh \
-    && ./configure --prefix=/usr && make && make install && cd .. && rm -rf s3fs-fuse
+RUN git clone https://github.com/s3fs-fuse/s3fs-fuse.git
+RUN cd s3fs-fuse && ./autogen.sh && ./configure --prefix=/usr
+RUN cd s3fs-fuse && make && make install
+RUN rm -rf s3fs-fuse
 
 RUN rm -rf /var/cache/apk/*
 
