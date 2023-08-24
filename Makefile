@@ -57,11 +57,12 @@ ifeq (,$(wildcard $(PROG)))
 ifeq (1,$(DOCKER))
 	docker run -it \
 	  -v "$(PWD)":"/go/src/$(GO_IMPORT_PATH)" golang:$(GO_VERSION) \
-	  bash -c "cd \"src/$(GO_IMPORT_PATH)\" && \
+	  sh -c "cd \"src/$(GO_IMPORT_PATH)\" && \
+	  go mod init $(GO_IMPORT_PATH) && \
 	  GOOS=$(GOOS) GOARCH=$(GOARCH) go $(GOBUILD) -o \"$(PROG)\""
 else
 	XGOOS=$(GOOS) XGOARCH=$(GOARCH) GOOS= GOARCH= go generate
-	#GOOS=$(GOOS) GOARCH=$(GOARCH) go $(GOBUILD) -o "$(PROG)"
+	GOOS=$(GOOS) GOARCH=$(GOARCH) go $(GOBUILD) -o "$(PROG)"
 endif
 endif
 
@@ -95,7 +96,7 @@ $(SEMVER_MK):
 ifeq (1,$(DOCKER))
 	docker run -it \
 	  -v "$(PWD)":"/go/src/$(GO_IMPORT_PATH)" golang:$(GO_VERSION) \
-	  bash -c "cd \"src/$(GO_IMPORT_PATH)\" && \
+	  sh -c "cd \"src/$(GO_IMPORT_PATH)\" && \
 	  XGOOS=$(GOOS) XGOARCH=$(GOARCH) GOOS= GOARCH= go run core/semver/semver.go -f mk -o $@"
 else
 	XGOOS=$(GOOS) XGOARCH=$(GOARCH) GOOS= GOARCH= go run core/semver/semver.go -f mk -o $@
@@ -233,7 +234,7 @@ coverage.out:
 	done
 
 cover: coverage.out | $(COVERAGE_IMPORTS_PATHS)
-	curl -sSL https://codecov.io/bash | bash -s -- -f $<
+	curl -sSL https://codecov.io/bash | sh -s -- -f $<
 
 .PHONY: coverage.out cover
 
@@ -472,7 +473,7 @@ locally using Docker:
 $$ docker run -it \\
   -v "$$(pwd)":"$(DOCKER_OUT_DIR)" \\
   golang:$(GO_VERSION) \\
-  bash -c "git clone https://github.com/$(TRAVIS_REPO_SLUG) \\
+  sh -c "git clone https://github.com/$(TRAVIS_REPO_SLUG) \\
       \"$(DOCKER_GIT_DIR)\" &&
     cd \"$(DOCKER_GIT_DIR)\" && $(GIST_GIT_FETCH)
     git checkout -b $(SHA7) $(SHA32) &&
