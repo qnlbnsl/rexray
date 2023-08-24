@@ -47,8 +47,8 @@ ifneq (,$(strip $(BUILD_TAGS)))
 GOBUILD += -tags '$(BUILD_TAGS)'
 endif
 
-GOOS := "linux"
-GOARCH := "arm64"
+# GOOS := "linux"
+# GOARCH := "arm64"
 # if docker is avaialble then default to using it to build REX-Ray,
 # otherwise check to see if go is available. if neither are
 # available then print an error

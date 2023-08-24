@@ -14,13 +14,13 @@ jobs:
     - &build-stage
       stage:          build
       language:       go
-      go:             1.9.1
+      go:             alpine
       go_import_path: github.com/rexray/rexray
       env:            PROG=rexray
       before_script:
         - git fetch --unshallow --tags
       script:
-        - export GOARCH=${XGOARCH:-amd64}
+        - export GOARCH=${XGOARCH:-aarch64}
         - make
         - md5sum $PROG
         - ls -al $PROG
