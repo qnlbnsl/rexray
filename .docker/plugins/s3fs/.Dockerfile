@@ -1,4 +1,4 @@
-FROM debian:11-slim
+FROM alpine:3.18
 
 RUN apk update
 RUN apk add xfsprogs e2fsprogs ca-certificates fuse alpine-sdk automake autoconf libxml2-dev fuse-dev curl-dev
